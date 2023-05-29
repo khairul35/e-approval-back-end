@@ -1,0 +1,1 @@
+{"version":3,"file":"fileResponse204.js","sourceRoot":"","sources":["../../../../src/gen/model/files/fileResponse204.ts"],"names":[],"mappings":";;;AACA,MAAa,eAAe;IAexB,MAAM,CAAC,mBAAmB;QACtB,OAAO,eAAe,CAAC,gBAAgB,CAAC;IAC5C,CAAC;;AAjBL,0CAkBC;AAZU,6BAAa,GAAuB,SAAS,CAAC;AAE9C,gCAAgB,GAA0D;IAC7E;QACI,MAAM,EAAE,QAAQ;QAChB,UAAU,EAAE,QAAQ;QACpB,MAAM,EAAE,QAAQ;KACnB;CAAK,CAAC"}

@@ -1,0 +1,90 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Employee = void 0;
+class Employee {
+    static getAttributeTypeMap() {
+        return Employee.attributeTypeMap;
+    }
+}
+exports.Employee = Employee;
+Employee.discriminator = undefined;
+Employee.attributeTypeMap = [
+    {
+        "name": "employeeID",
+        "baseName": "employeeID",
+        "type": "string"
+    },
+    {
+        "name": "title",
+        "baseName": "title",
+        "type": "string"
+    },
+    {
+        "name": "firstName",
+        "baseName": "firstName",
+        "type": "string"
+    },
+    {
+        "name": "lastName",
+        "baseName": "lastName",
+        "type": "string"
+    },
+    {
+        "name": "dateOfBirth",
+        "baseName": "dateOfBirth",
+        "type": "string"
+    },
+    {
+        "name": "address",
+        "baseName": "address",
+        "type": "Address"
+    },
+    {
+        "name": "email",
+        "baseName": "email",
+        "type": "string"
+    },
+    {
+        "name": "gender",
+        "baseName": "gender",
+        "type": "Employee.GenderEnum"
+    },
+    {
+        "name": "phoneNumber",
+        "baseName": "phoneNumber",
+        "type": "string"
+    },
+    {
+        "name": "startDate",
+        "baseName": "startDate",
+        "type": "string"
+    },
+    {
+        "name": "endDate",
+        "baseName": "endDate",
+        "type": "string"
+    },
+    {
+        "name": "payrollCalendarID",
+        "baseName": "payrollCalendarID",
+        "type": "string"
+    },
+    {
+        "name": "updatedDateUTC",
+        "baseName": "updatedDateUTC",
+        "type": "Date"
+    },
+    {
+        "name": "createdDateUTC",
+        "baseName": "createdDateUTC",
+        "type": "Date"
+    }
+];
+(function (Employee) {
+    let GenderEnum;
+    (function (GenderEnum) {
+        GenderEnum[GenderEnum["M"] = 'M'] = "M";
+        GenderEnum[GenderEnum["F"] = 'F'] = "F";
+    })(GenderEnum = Employee.GenderEnum || (Employee.GenderEnum = {}));
+})(Employee = exports.Employee || (exports.Employee = {}));
+//# sourceMappingURL=employee.js.map

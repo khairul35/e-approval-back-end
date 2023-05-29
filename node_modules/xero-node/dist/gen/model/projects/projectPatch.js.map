@@ -1,0 +1,1 @@
+{"version":3,"file":"projectPatch.js","sourceRoot":"","sources":["../../../../src/gen/model/projects/projectPatch.ts"],"names":[],"mappings":";;;AAEA,MAAa,YAAY;IAYrB,MAAM,CAAC,mBAAmB;QACtB,OAAO,YAAY,CAAC,gBAAgB,CAAC;IACzC,CAAC;;AAdL,oCAeC;AAZU,0BAAa,GAAuB,SAAS,CAAC;AAE9C,6BAAgB,GAA0D;IAC7E;QACI,MAAM,EAAE,QAAQ;QAChB,UAAU,EAAE,QAAQ;QACpB,MAAM,EAAE,eAAe;KAC1B;CAAK,CAAC"}

@@ -1,0 +1,67 @@
+import { Payment } from '././payment';
+import { Receipt } from '././receipt';
+import { User } from '././user';
+export declare class ExpenseClaim {
+    /**
+    * Xero generated unique identifier for an expense claim
+    */
+    'expenseClaimID'?: string;
+    /**
+    * Current status of an expense claim – see status types
+    */
+    'status'?: ExpenseClaim.StatusEnum;
+    /**
+    * See Payments
+    */
+    'payments'?: Array<Payment>;
+    'user'?: User;
+    'receipts'?: Array<Receipt>;
+    /**
+    * Last modified date UTC format
+    */
+    'updatedDateUTC'?: Date;
+    /**
+    * The total of an expense claim being paid
+    */
+    'total'?: number;
+    /**
+    * The amount due to be paid for an expense claim
+    */
+    'amountDue'?: number;
+    /**
+    * The amount still to pay for an expense claim
+    */
+    'amountPaid'?: number;
+    /**
+    * The date when the expense claim is due to be paid YYYY-MM-DD
+    */
+    'paymentDueDate'?: string;
+    /**
+    * The date the expense claim will be reported in Xero YYYY-MM-DD
+    */
+    'reportingDate'?: string;
+    /**
+    * The Xero identifier for the Receipt e.g. e59a2c7f-1306-4078-a0f3-73537afcbba9
+    */
+    'receiptID'?: string;
+    static discriminator: string | undefined;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
+}
+export declare namespace ExpenseClaim {
+    enum StatusEnum {
+        SUBMITTED,
+        AUTHORISED,
+        PAID,
+        VOIDED,
+        DELETED
+    }
+}
