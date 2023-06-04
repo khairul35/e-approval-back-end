@@ -52,6 +52,10 @@ exports.insertLineItems = (poID, { description, quantity, unitAmount, itemCode,
     `;
 };
 
+exports.deleteLineItems = (poID) => {
+    return `DELETE FROM LineItems WHERE PurchaseOrderID=${qint(poID)}`;
+};
+
 
 exports.updatePurchaseOrder = (id, {
     purchaseOrderNumber, date, deliveryDate, lineAmountTypes, reference,
@@ -80,7 +84,7 @@ exports.updatePurchaseOrder = (id, {
             TotalTax = ${qint(totalTax)},
             Total = ${qint(total)},
             TotalDiscount = ${qint(totalDiscount)},
-            HasAttachments = ${qbit(hasAttachments)},
+            HasAttachments = ${qbit(hasAttachments)}
         WHERE PurchaseOrderID = ${qint(id)}`;
 };
 

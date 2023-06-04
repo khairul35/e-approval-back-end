@@ -5,7 +5,7 @@ const AuthRepository = require('../repository/AuthenticationRepository');
 
 const clientId = '219C2261C03B4A3685DF6EDC898EAD97';
 const clientSecret = 'x1E_RdPfZxxtC4eICylkSqsrwXZLju8sM1NISfzLL2M6YaAd';
-const redirectUris = 'http://localhost/';
+const redirectUris = 'https://e-approval.netlify.app/app-integration';
 
 const xero = new XeroClient({
     clientId: clientId,
@@ -192,7 +192,7 @@ exports.addCurrency = async (refreshToken, tenantId, body) => {
     const { data } = await axios.put(
         'https://api.xero.com/api.xro/2.0/Currencies',
         body,
-        headers,
+        { headers },
     ).catch(({ response }) => {
         console.log(response);
         throw new CustomError(response.data.Status, response.data.Title);
@@ -241,6 +241,29 @@ function removeNullKeys(obj) {
   });
   return obj;
 };
+
+function capitalizeKeys(obj) {
+  if (typeof obj !== 'object' || obj === null) {
+    return obj;
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map(capitalizeKeys);
+  }
+
+  return Object.keys(obj).reduce((result, key) => {
+    const capitalizedKey = key.charAt(0).toUpperCase() + key.slice(1);
+    const value = obj[key];
+
+    if (typeof value === 'object' && value !== null) {
+      result[capitalizedKey] = capitalizeKeys(value);
+    } else {
+      result[capitalizedKey] = value;
+    }
+
+    return result;
+  }, {});
+}
 
 function formatDate(obj) {
   Object.keys(obj).forEach((key) => {

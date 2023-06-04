@@ -9,8 +9,8 @@ const findAllPurchaseOrder = async (tenantId) => {
         let Total = 0;
         PO.lineItems = await findAllLineItemsByPOId(PO.PurchaseOrderID);
         for (let item of PO.lineItems) {
-            SubTotal += Number(item.SubTotal || 0);
-            Total += Number(item.LineAmount || 0);
+            SubTotal += Number(item.subtotal || 0);
+            Total += Number(item.total || 0);
         }
         PO.SubTotal = formatDecimal(SubTotal);
         PO.Total = formatDecimal(Total);
@@ -25,8 +25,8 @@ const findPurchaseOrderByID = async (id) => {
     let SubTotal = 0;
     let Total = 0;
     for (let item of POs.lineItems) {
-        SubTotal += Number(item.SubTotal || 0);
-        Total += Number(item.LineAmount || 0);
+        SubTotal += Number(item.subtotal || 0);
+        Total += Number(item.total || 0);
     }
     POs.SubTotal = formatDecimal(SubTotal);;
     POs.Total = formatDecimal(Total);
@@ -41,7 +41,6 @@ const findAllLineItemsByPOId = async (POId) => {
 exports.createPurchaseOrder = async (tenantId, username, body) => {
     await request(query.createPurchaseOrder(tenantId, username, body));
     const { id } = await request(query.outputInsertedID(), true);
-    console.log(body)
     for (const lineItem of body.lineItems) {
       await request(query.insertLineItems(id, lineItem));
     }
@@ -50,6 +49,10 @@ exports.createPurchaseOrder = async (tenantId, username, body) => {
 
 exports.updatePurchaseOrder = async (id, body) => {
     await request(query.updatePurchaseOrder(id, body));
+    await request(query.deleteLineItems(id));
+    for (const lineItem of body.lineItems) {
+      await request(query.insertLineItems(id, lineItem));
+    }
     return await findPurchaseOrderByID(id);
 };
 

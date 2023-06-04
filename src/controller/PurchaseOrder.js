@@ -59,14 +59,14 @@ exports.updatePurchaseOrder = async (req, res, next) => {
             // Line Items
             body.LineItems = po.lineItems.map((lineItem) => {
                 return {
-                    ItemCode: lineItem.ItemCode,
-                    Description: lineItem.Description,
-                    UnitAmount: parseFloat(lineItem.UnitAmount),
-                    TaxType: lineItem.TaxType,
-                    AccountCode: lineItem.AccountCode,
-                    Tracking: lineItem.Tracking,
-                    Quantity: lineItem.Quantity,
-                    DiscountRate: parseFloat(lineItem.DiscountRate)
+                    ItemCode: lineItem.itemCode,
+                    Description: lineItem.description,
+                    UnitAmount: parseFloat(lineItem.unitAmount),
+                    TaxType: lineItem.taxType,
+                    AccountCode: lineItem.accountCode,
+                    Tracking: lineItem.tracking,
+                    Quantity: lineItem.quantity,
+                    DiscountRate: parseFloat(lineItem.discountRate)
                 };
             });
             await XeroServices.updatePurchaseOrder(xeroRefreshToken, tenantId, body, po.xeroPurchaseOrderID);
@@ -102,14 +102,14 @@ exports.approvePurchaseOrder = async (req, res, next) => {
         // Line Items
         body.LineItems = po.lineItems.map((lineItem) => {
             return {
-                ItemCode: lineItem.ItemCode,
-                Description: lineItem.Description,
-                UnitAmount: parseFloat(lineItem.UnitAmount),
-                TaxType: lineItem.TaxType,
-                AccountCode: lineItem.AccountCode,
-                Tracking: lineItem.Tracking,
-                Quantity: lineItem.Quantity,
-                DiscountRate: parseFloat(lineItem.DiscountRate)
+                ItemCode: lineItem.itemCode,
+                Description: lineItem.description,
+                UnitAmount: parseFloat(lineItem.unitAmount),
+                TaxType: lineItem.taxType,
+                AccountCode: lineItem.accountCode,
+                Tracking: lineItem.tracking,
+                Quantity: lineItem.quantity,
+                DiscountRate: parseFloat(lineItem.discountRate)
             };
         });
         const xpo = await XeroServices.createPurchaseOrder(xeroRefreshToken, tenantId, body);
