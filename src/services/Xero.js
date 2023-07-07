@@ -110,6 +110,47 @@ exports.updatePurchaseOrder = async (refreshToken, tenantId, body, id) => {
     return data.PurchaseOrders[0];
 };
 
+
+/************************************************************************* */
+/** Invoice */
+/************************************************************************* */
+
+exports.createInvoice = async (refreshToken, tenantId, body) => {
+    const { access_token: accessToken } = await generateRefreshToken(refreshToken);
+    const headers = {
+        'Xero-Tenant-id': tenantId,
+        'Authorization': 'Bearer ' + accessToken,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+    };
+    const { data } = await axios.post(
+        'https://api.xero.com/api.xro/2.0/Invoices',
+        { Invoices: formatDate(removeNullKeys(body)) },
+        { headers }
+    ).catch(({ response }) => {
+        throw new CustomError(response.status, response.statusText);
+    });
+    return data.Invoices[0];
+};
+
+exports.updateInvoice = async (refreshToken, tenantId, body, id) => {
+    const { access_token: accessToken } = await generateRefreshToken(refreshToken);
+    const headers = {
+        'Xero-Tenant-id': tenantId,
+        'Authorization': 'Bearer ' + accessToken,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+    };
+    const { data } = await axios.post(
+        `https://api.xero.com/api.xro/2.0/Invoices/${id}`,
+        { Invoices: formatDate(removeNullKeys(body)) },
+        { headers }
+    ).catch(({ response }) => {
+        throw new CustomError(response.status, response.statusText);
+    });
+    return data.Invoices[0];
+};
+
 /************************************************************************* */
 /** Contact */
 /************************************************************************* */

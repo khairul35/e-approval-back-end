@@ -20,6 +20,7 @@ exports.LineItem = (data) => {
       lineAmount: formatDecimal(data.LineAmount),
       subtotal: total.subtotal,
       total: total.total,
+      category: data.Category || null,
     };
 };
 

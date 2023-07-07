@@ -4,8 +4,8 @@ const AuthRepository = require('../repository/AuthenticationRepository');
 
 exports.findAllPurchaseOrder = async (req, res, next) => {
     try {
-        const { tenantId } = req.query;
-        const po = await Repository.findAllPurchaseOrder(tenantId);
+        const { tenantId, roleId, username } = await AuthRepository.findCurrentUser(req);
+        const po = await Repository.findAllPurchaseOrder(tenantId, roleId, username);
         return res.send(po);
     } catch (err) {
         return next(err);
@@ -14,7 +14,7 @@ exports.findAllPurchaseOrder = async (req, res, next) => {
 
 exports.findPurchaseOrderByID = async (req, res, next) => {
     try {
-        const { id } = await req.params;
+        const { id } = req.params;
         // const po = await XeroServices.findPurchaseOrderByID(id);
         const po = await Repository.findPurchaseOrderByID(id);
         return res.send(po);
@@ -25,8 +25,7 @@ exports.findPurchaseOrderByID = async (req, res, next) => {
 
 exports.createPurchaseOrder = async (req, res, next) => {
     try {
-        const { tenantId } = req.query;
-        const { username } = await AuthRepository.findCurrentUser(req);
+        const { username , tenantId } = await AuthRepository.findCurrentUser(req);
         const po = await Repository.createPurchaseOrder(tenantId, username, req.body);
         return res.send(po);
     } catch (err) {
@@ -36,9 +35,8 @@ exports.createPurchaseOrder = async (req, res, next) => {
 
 exports.updatePurchaseOrder = async (req, res, next) => {
     try {
-        const { xeroRefreshToken } = await AuthRepository.findCurrentUser(req);
+        const { xeroRefreshToken, tenantId } = await AuthRepository.findCurrentUser(req);
         const { id } = await req.params;
-        const { tenantId } = req.query;
         const po = await Repository.updatePurchaseOrder(id, req.body);
         if (po.xeroPurchaseOrderID) {
             let body = {};
@@ -79,8 +77,7 @@ exports.updatePurchaseOrder = async (req, res, next) => {
 
 exports.approvePurchaseOrder = async (req, res, next) => {
     try {
-        const { tenantId } = req.query;
-        const { xeroRefreshToken, username } = await AuthRepository.findCurrentUser(req);
+        const { xeroRefreshToken, username, tenantId } = await AuthRepository.findCurrentUser(req);
         const { id } = await req.params;
         const po = await Repository.approvePurchaseOrder(id, username);
         let body = {};

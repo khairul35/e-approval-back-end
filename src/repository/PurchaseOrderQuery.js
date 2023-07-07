@@ -1,7 +1,8 @@
 const { qstring, qbit, qint } = require('./index')
 
-exports.findAllPurchaseOrder = (tenantId) => {
-    return `SELECT * FROM PurchaseOrders WHERE tenantId = ${qstring(tenantId)}`;
+exports.findAllPurchaseOrder = (tenantId, roleId, username) => {
+    return `SELECT * FROM PurchaseOrders WHERE tenantId = ${qstring(tenantId)}
+        ${roleId == 1 ? '' : `AND CreatedBy = ${username}`}`;
 };
 
 exports.findPurchaseOrderByID = (id) => {
@@ -41,14 +42,14 @@ exports.findAllLineItemsByPOId = (POId) => {
 };
 
 exports.insertLineItems = (poID, { description, quantity, unitAmount, itemCode,
-    accountCode, taxType, discountRate, tracking, taxAmount, lineAmount }) => {
+    accountCode, taxType, discountRate, tracking, taxAmount, lineAmount, category }) => {
     return `INSERT INTO highrule.LineItems
         (PurchaseOrderID, Description, Quantity, UnitAmount, ItemCode,
-        AccountCode, TaxType, DiscountRate, Tracking, TaxAmount, LineAmount)
+        AccountCode, TaxType, DiscountRate, Tracking, TaxAmount, LineAmount, Category)
         VALUES(${qint(poID)}, ${qstring(description)}, ${qint(quantity)},
         ${qint(unitAmount)}, ${qstring(itemCode)}, ${qstring(accountCode)},
         ${qstring(taxType)}, ${qint(discountRate)}, ${qstring(tracking)},
-        ${qint(taxAmount)}, ${qint(lineAmount)});
+        ${qint(taxAmount)}, ${qint(lineAmount)}, ${qstring(category)});
     `;
 };
 

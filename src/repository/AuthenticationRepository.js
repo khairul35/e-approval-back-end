@@ -19,8 +19,8 @@ exports.findCurrentUser = async (req) => {
     return user
 };
 
-exports.insertXeroToken = async (username, accessToken, refreshToken) => {
-    await request(query.insertXeroToken(username, accessToken, refreshToken));
+exports.insertXeroToken = async (tenantId, accessToken, refreshToken) => {
+    await request(query.insertXeroToken(tenantId, accessToken, refreshToken));
     return 'successfully insert xero token';
 };
 

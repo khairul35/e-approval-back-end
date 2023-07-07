@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const jwtsk = 'secret key';
 const bcrypt = require('bcrypt');
+const XeroServices = require('../services/Xero');
+const ConnectionRepository = require('../repository/ConnectionRepository');
 const repository = require('../repository/AuthenticationRepository');
 const CustomError = require('../utils/error');
 const Xero = require('../services/Xero');
@@ -43,10 +45,21 @@ exports.signIn = async (req, res, next) => {
 
 exports.registerXero = async (req, res, next) => {
     try {
-        const token = await Xero.generateToken(req.query.code);
-        const { username } =  await repository.findCurrentUser(req);
-        await repository.insertXeroToken(username, token.access_token, token.refresh_token);
-        return res.send('registered xero successfully');
+        const { access_token, refresh_token } = await Xero.generateToken(req.query.code);
+        const { id } =  await repository.findCurrentUser(req);
+
+        const xeroConnections = await XeroServices.findAllConnection(refresh_token);
+        const result = [];
+        for (const connection of xeroConnections) {
+            // check whether tenant has been registered previously or not
+            const tenant = await ConnectionRepository.findTenantByTenantId(connection.tenantId);
+            if (!tenant.tenantId) {
+                await ConnectionRepository.registerTenant(connection.tenantId, connection.id, connection.tenantName, connection.tenantType, access_token, refresh_token, connection.createdDateUtc);
+            }
+            await ConnectionRepository.registerTenantUserAsAdmin(tenant.tenantId, id);
+            result.push(tenant);
+        }
+        return res.send(result);
     } catch (err) {
         return next(err);
     }

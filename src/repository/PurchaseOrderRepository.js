@@ -2,8 +2,8 @@ const { LineItem } = require('../mapper/LineItem');
 const query = require('./PurchaseOrderQuery');
 const { request } = require('./index');
 
-const findAllPurchaseOrder = async (tenantId) => {
-    const POs = await request(query.findAllPurchaseOrder(tenantId));
+const findAllPurchaseOrder = async (tenantId, roleId, username) => {
+    const POs = await request(query.findAllPurchaseOrder(tenantId, roleId, username));
     for (let PO of POs) {
         let SubTotal = 0;
         let Total = 0;
